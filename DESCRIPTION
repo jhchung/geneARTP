@@ -1,10 +1,17 @@
 Package: geneARTP
-Title: What the package does (one line)
-Version: 0.1
-Authors@R: "First Last <first.last@example.com> [aut, cre]"
-Description: What the package does (one paragraph)
+Title: Gene-based Adaptive Rank Truncated Product (ARTP) analysis.
+Version: 0.0.0.9000
+Authors@R: person("Jonathan", "Chung",
+                  email = "jonathan.chung@phd.einstein.yu.edu",
+                  role = c("aut", "cre"))
+Description: This package performs gene-based association analysis using the
+  Adaptive Rank Truncated Product (ARTP) method.
 Depends: R (>= 3.1.1)
-License: What license is it under?
+License: MIT + file LICENSE
 LazyData: true
+URL: https://github.com/jhchung/geneARTP
+BugReports: https://github.com/jhchung/geneARTP/issues
 Imports:
-  plyr
+  plyr (>= 1.8.0),
+  optparse
+Suggests: testthat (>= 0.9.1)

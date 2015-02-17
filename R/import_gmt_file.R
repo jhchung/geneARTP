@@ -11,7 +11,6 @@ read_gmt_file <- function(gmt_file) {
   message("Reading .gmt file")
   gmt_data <- scan(gmt_file, what = "character", sep = "\n", fill = TRUE,
                    quote = "")
-  gmt_data <- strsplit(gmt_data, "\t")
   gmt_data <- format_gmt(gmt_data)
   return(gmt_data)
 }
@@ -20,9 +19,10 @@ read_gmt_file <- function(gmt_file) {
 #'
 #' @param gmt_data \code{.gmt} data as read using \code{scan}.
 format_gmt <- function(gmt_data) {
-  require(plyr)
-  formatted_gmt_data <- llply(gmt_data, function(x) as.array(x[3:length(x)]))
-  set_names <- laply(gmt_data, function(x) x[[1]])
+  gmt_data <- strsplit(gmt_data, "\t")
+  formatted_gmt_data <- plyr::llply(gmt_data,
+                                    function(x) as.array(x[3:length(x)]))
+  set_names <- plyr::laply(gmt_data, function(x) x[[1]])
 
   names(formatted_gmt_data) <- set_names
   return(formatted_gmt_data)
