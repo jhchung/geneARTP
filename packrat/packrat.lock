@@ -1,0 +1,14 @@
+PackratFormat: 1.4
+PackratVersion: 0.4.2.1
+RVersion: 3.1.1
+Repos: CRAN=http://cran.case.edu/,
+    BioCsoft=http://bioconductor.org/packages/3.0/bioc,
+    BioCann=http://bioconductor.org/packages/3.0/data/annotation,
+    BioCexp=http://bioconductor.org/packages/3.0/data/experiment,
+    BioCextra=http://bioconductor.org/packages/3.0/extra,
+    CRANextra=http://www.stats.ox.ac.uk/pub/RWin
+
+Package: packrat
+Source: CRAN
+Version: 0.4.2-1
+Hash: 085f944cec9b56e8a280222b5174c76e
