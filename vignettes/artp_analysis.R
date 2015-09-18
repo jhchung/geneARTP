@@ -7,10 +7,10 @@ options(stringsAsFactors = FALSE)
 # Set up command line options ----
 option_list <- list(
   make_option(c("-i", "--input"), type = "character",
-              default = "C:/Lab/projects/WES/results/wes_wgs/wes_wgs_combined_pvalues.deleterious.maf_novel.skat.txt",
+              default = "C:/Lab/projects/WES/results/wes_wgs/metaskat/wes_wgs.deleterious.maf_0.01.skat_burden.txt",
               help = "Path to input gene p-value file"),
   make_option(c("-g", "--gmt"), type = "character",
-              default = "C:/Lab/data/gmtFiles/lageHeartSets.gmt",
+              default = "C:/Lab/projects/WES/data/gene_lists/tbx1_and_noncanonical_wnt.gmt",
               help = "Path to GMT file containing gene set definitions"),
   make_option(c("-o", "--output_dir"), type = "character",
               default = "C:/Lab/projects/WES/results/wes_wgs/artp",
@@ -24,10 +24,14 @@ option_list <- list(
   make_option("--adjust_method", type = "character", default = "fdr",
               help = "Method to adjust p-values c('holm', 'hochberg', 'hommel', 'bonferroni', 'BH', 'BY','fdr', 'none')"),
   make_option("--pvalue_col", type = "character",
-              default = "Pvalue",
+              default = "MetaSKAT",
               help = "Name of the p-value column"),
   make_option("--gene_col", type = "character", default = "Gene",
-              help = "Name of the gene column")
+              help = "Name of the gene column"),
+  make_option("--gene_pval_cutoff",
+              type = "numeric",
+              default = 0.5,
+              help = "Maximum p-value for genes")
 )
 
 #-------------------------------------------------------------------------------
@@ -38,9 +42,14 @@ args <- parse_args(object = OptionParser(option_list = option_list),
 
 # Import data ----
 pvalues <- read.table(args$input, header = TRUE) %>%
-  dplyr::select_(args$gene_col, args$pvalue_col)
+  dplyr::select_(args$gene_col, args$pvalue_col) %>%
+  dplyr::rename_(Pvalue = args$pvalue_col)
 
 gene_sets <- read_gmt_file(args$gmt)
+
+# Filter genes ----
+pvalues <- pvalues %>%
+  dplyr::filter(Pvalue < args$gene_pval_cutoff)
 
 # Filter gene sets ----
 gene_sets <- filter_gene_set_on_size(gene_sets,

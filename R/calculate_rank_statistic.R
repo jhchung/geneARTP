@@ -11,6 +11,8 @@
 #' additional column of the rank statistic
 #' @export
 calculate_rank_statistic <- function(gene_pvalues, pvalue_col = "Pvalue") {
+  # Remove NA values
+  gene_pvalues <- gene_pvalues[!is.na(gene_pvalues[, pvalue_col]), ]
   gene_pvalues <- gene_pvalues[order(gene_pvalues[, pvalue_col]), ]
   gene_pvalues$rank_statistic <- seq(1:nrow(gene_pvalues))/nrow(gene_pvalues)
   return(gene_pvalues)

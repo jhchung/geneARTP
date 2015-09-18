@@ -1,7 +1,12 @@
 #' Calculate Fishers method test statistic.
 #'
+#' Use Fisher's method to combine p-values. Transform p-values to Chi square
+#' statistic.
+#'
+#'
 #' @param gene_rank_statistic \code{vector} containing rank statistic of genes
-#'  of interest.
+#' of interest.
+#' @return \code{numeric}. Chi square statistic.
 #' @export
 calculate_fishers_method_test_statistic <- function(gene_rank_statistic) {
   # Calculate test statistic
